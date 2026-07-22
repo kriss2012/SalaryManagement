@@ -4,93 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero Enrollment | Guild Register</title>
-    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <!-- Google Fonts: Space Grotesk & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
     <style>
         :root {
-            --bg-color: #06070a;
-            --card-bg: rgba(13, 15, 24, 0.75);
-            --neon-pink: #ff007f;
-            --neon-cyan: #00f0ff;
-            --neon-violet: #8b5cf6;
-            --neon-yellow: #ffb703;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
+            --bg-primary: #0B0B0B;
+            --bg-secondary: #121212;
+            --accent-crimson: #A30000;
+            --accent-crimson-glow: rgba(163, 0, 0, 0.45);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --border-color: rgba(163, 0, 0, 0.35);
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 40%);
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 50px 0;
+            padding: 40px 0;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Scanline gaming grid */
+        /* Diagonal visual textures */
         body::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 50px 50px;
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.04) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
 
         .register-container {
             width: 100%;
-            max-width: 650px;
+            max-width: 600px;
             padding: 20px;
             z-index: 10;
         }
 
         .register-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 28px;
-            padding: 45px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
-                        0 0 40px rgba(139, 92, 246, 0.1);
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .register-card:hover {
-            border-color: rgba(0, 240, 255, 0.25);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
-                        0 0 30px rgba(0, 240, 255, 0.08);
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-crimson);
+            border-radius: 0;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.65), 
+                        0 0 20px var(--accent-crimson-glow);
+            transition: all 0.25s ease;
         }
 
         .panel-heading {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 5px;
-            background: linear-gradient(to right, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
+            text-transform: uppercase;
             text-align: center;
+            letter-spacing: 1px;
         }
 
         .panel-subheading {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: center;
             margin-bottom: 35px;
             font-weight: 300;
@@ -101,79 +86,82 @@
             color: var(--text-secondary);
             font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
+            letter-spacing: 1px;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
         .form-control-cyber {
-            background: rgba(6, 7, 10, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            background: #0B0B0B;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
             color: var(--text-primary);
             padding: 12px 16px;
             font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s ease;
             width: 100%;
         }
 
         .form-control-cyber:focus {
-            background: rgba(6, 7, 10, 0.98);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+            background: #000;
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 12px var(--accent-crimson-glow);
             outline: none;
             color: #fff;
         }
 
         .form-control-cyber:disabled, .form-control-cyber[readonly] {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border-color: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(255, 255, 255, 0.3);
         }
 
         /* Dropdown custom look */
         select.form-control-cyber {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23B3B3B3' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 16px center;
-            background-size: 14px;
-            padding-right: 45px;
+            background-size: 12px;
+            padding-right: 40px;
         }
 
         .btn-cyber {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-violet) 100%);
+            background: var(--accent-crimson);
             border: none;
-            border-radius: 12px;
+            border-radius: 0;
             color: #fff;
-            padding: 14px 35px;
-            font-size: 0.95rem;
-            font-weight: 800;
+            padding: 14px 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(163, 0, 0, 0.3);
+            height: 48px;
         }
 
         .btn-cyber:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.5);
-            filter: brightness(1.1);
+            background: #c30000;
+            box-shadow: 0 0 15px var(--accent-crimson-glow);
         }
 
         .btn-secondary-cyber {
             background: transparent;
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
             color: var(--text-primary);
             padding: 12px 25px;
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: 600;
             text-decoration: none;
             transition: all 0.25s ease;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             text-transform: uppercase;
             letter-spacing: 1px;
+            height: 48px;
         }
 
         .btn-secondary-cyber:hover {
@@ -182,27 +170,28 @@
             color: #fff;
         }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        /* Mobile Adjustments */
+        @media (max-width: 576px) {
+            .register-card {
+                padding: 30px 20px;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .panel-heading {
+                font-size: 1.4rem;
             }
-        }
-
-        .animate-fade-in {
-            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+            .d-flex-mobile {
+                flex-direction: column-reverse;
+                gap: 15px;
+            }
+            .d-flex-mobile a, .d-flex-mobile button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="register-container">
-        <div class="register-card animate-fade-in">
+        <div class="register-card">
             
             <h2 class="panel-heading">Hero Enrollment</h2>
             <p class="panel-subheading">Create your profile, select your class, and register your character.</p>
@@ -220,7 +209,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="password" class="form-label">Access Passcode (Password)</label>
+                    <label for="password" class="form-label">Access Passcode</label>
                     <input type="password" class="form-control-cyber" id="password" th:field="*{password}" required placeholder="••••••••">
                 </div>
 
@@ -250,13 +239,13 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="powerLevel" class="form-label">Initial Combat Power Level</label>
+                    <label for="powerLevel" class="form-label">Initial Power Level</label>
                     <input type="number" class="form-control-cyber" id="powerLevel" th:field="*{powerLevel}" readonly>
                 </div>
 
                 <div class="col-md-6">
                     <label for="magicElement" class="form-label">Elemental Affinity</label>
-                    <input type="text" class="form-control-cyber" id="magicElement" th:field="*{magicElement}" placeholder="e.g. Fire, Lightning, Water">
+                    <input type="text" class="form-control-cyber" id="magicElement" th:field="*{magicElement}" placeholder="e.g. Fire, Lightning">
                 </div>
 
                 <div class="col-md-6">
@@ -264,7 +253,7 @@
                     <input type="text" class="form-control-cyber" id="specialAbility" th:field="*{specialAbility}" placeholder="e.g. Gum-Gum Pistol">
                 </div>
 
-                <div class="col-12 mt-5 d-flex justify-content-between align-items-center">
+                <div class="col-12 mt-5 d-flex d-flex-mobile justify-content-between align-items-center">
                     <a th:href="@{/}" class="btn-secondary-cyber">Cancel Enrollment</a>
                     <button type="submit" class="btn-cyber">Enroll Hero</button>
                 </div>
