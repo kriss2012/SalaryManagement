@@ -4,34 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hero Profile | Guild Portal</title>
-    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <!-- Google Fonts: Space Grotesk & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
     <style>
         :root {
-            --bg-color: #06070a;
-            --card-bg: rgba(13, 15, 24, 0.75);
-            --neon-pink: #ff007f;
-            --neon-cyan: #00f0ff;
-            --neon-violet: #8b5cf6;
-            --neon-yellow: #ffb703;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --neon-theme: #8b5cf6;
-            --neon-glow: rgba(139, 92, 246, 0.25);
+            --bg-primary: #0B0B0B;
+            --bg-secondary: #121212;
+            --accent-crimson: #A30000;
+            --accent-crimson-glow: rgba(163, 0, 0, 0.45);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --border-color: rgba(163, 0, 0, 0.35);
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 5% 5%, rgba(139, 92, 246, 0.12) 0%, transparent 35%),
-                radial-gradient(circle at 95% 95%, rgba(0, 240, 255, 0.12) 0%, transparent 35%);
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -39,335 +33,284 @@
             position: relative;
         }
 
-        /* Scanline gaming grid */
+        /* Diagonal visual textures */
         body::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 50px 50px;
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.04) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
 
         /* Navbar Styling */
         .navbar-cyber {
-            background: rgba(8, 9, 14, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 18px 0;
+            background: #0B0B0B;
+            border-bottom: 2px solid var(--accent-crimson);
+            padding: 15px 0;
             z-index: 100;
         }
 
         .navbar-brand-cyber {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.6rem;
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
+            color: var(--text-primary) !important;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 12px;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .navbar-brand-cyber img {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
         }
 
         .nav-btn {
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 10px 22px;
-            font-size: 0.9rem;
-            font-weight: 700;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            border-radius: 0;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: var(--text-primary);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            height: 40px;
         }
 
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--neon-cyan);
+            border-color: var(--accent-crimson);
+            background: rgba(163, 0, 0, 0.1);
             color: #fff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            transform: translateY(-1px);
+            box-shadow: 0 0 10px var(--accent-crimson-glow);
         }
 
         .nav-btn-logout {
-            border-color: rgba(220, 38, 38, 0.4);
-            color: #f87171;
+            border-color: rgba(163, 0, 0, 0.4);
+            color: #fca5a5;
         }
 
         .nav-btn-logout:hover {
-            background: rgba(220, 38, 38, 0.1);
-            border-color: #ef4444;
-            color: #fca5a5;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            background: rgba(163, 0, 0, 0.15);
+            border-color: var(--accent-crimson);
+            color: #fff;
         }
 
-        /* Profile Card Wrapper */
+        /* Profile Layout Container */
         .dashboard-container {
             flex: 1;
-            display: flex;
-            align-items: center;
             padding: 50px 0;
             z-index: 10;
         }
 
-        /* Dynamic Themes */
-        .theme-naruto {
-            --neon-theme: #ff7a00;
-            --neon-glow: rgba(255, 122, 0, 0.35);
-        }
-        .theme-luffy {
-            --neon-theme: #ff003c;
-            --neon-glow: rgba(255, 0, 60, 0.35);
-        }
-        .theme-gojo {
-            --neon-theme: #00f0ff;
-            --neon-glow: rgba(0, 240, 255, 0.35);
-        }
-        .theme-nezuko {
-            --neon-theme: #ff00a0;
-            --neon-glow: rgba(255, 0, 160, 0.35);
-        }
-
         .profile-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1.5px solid rgba(255, 255, 255, 0.06);
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: 0 30px 65px rgba(0, 0, 0, 0.65);
-            padding: 50px;
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-crimson);
+            border-radius: 0;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.65), 
+                        0 0 20px var(--accent-crimson-glow);
+            margin-bottom: 30px;
         }
 
-        .profile-card:hover {
-            border-color: var(--neon-theme);
-            box-shadow: 0 30px 65px rgba(0, 0, 0, 0.65),
-                        0 0 40px var(--neon-glow);
-        }
-
-        /* Character Frame & Avatar */
+        /* Skewed Weapon-like Avatar container */
         .avatar-container {
             position: relative;
-            width: 100%;
-            max-width: 260px;
-            margin: 0 auto 35px auto;
-        }
-
-        .avatar-glow-ring {
-            position: absolute;
-            top: -6px; left: -6px; right: -6px; bottom: -6px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-theme), var(--neon-cyan), var(--neon-pink));
-            z-index: 1;
-            animation: rotateGlow 8s linear infinite;
-        }
-
-        @keyframes rotateGlow {
-            100% { transform: rotate(360deg); }
+            width: 190px;
+            height: 190px;
+            margin: 0 auto 25px auto;
+            border: 2px solid var(--accent-crimson);
+            padding: 6px;
+            background: #0B0B0B;
+            /* Sharp skewed shape inspired by Kiritsugu weapon frames */
+            clip-path: polygon(0 0, 100% 6%, 92% 100%, 8% 92%);
         }
 
         .avatar-frame {
-            position: relative;
-            z-index: 2;
             width: 100%;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            border: 5px solid var(--bg-color);
+            height: 100%;
             overflow: hidden;
-            background: #0f1016;
-            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95);
+            background: #000;
         }
 
         .avatar-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s ease;
         }
 
         .avatar-container:hover .avatar-img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
-        /* Power level badge */
         .power-badge {
             position: absolute;
-            bottom: -5px;
+            bottom: 10px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 3;
-            background: #08090d;
-            border: 1.5px solid var(--neon-yellow);
-            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
-            border-radius: 50px;
-            padding: 8px 24px;
-            font-size: 0.9rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            white-space: nowrap;
-            color: var(--neon-yellow);
+            background: var(--accent-crimson);
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 4px 14px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border-radius: 0;
+            box-shadow: 0 0 10px rgba(163, 0, 0, 0.8);
         }
 
-        /* Identity Details */
         .char-name {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 2.4rem;
-            margin-bottom: 4px;
-            color: #fff;
-            text-align: center;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
         }
 
         .char-alias {
-            font-size: 1.1rem;
-            color: var(--neon-theme);
-            font-weight: 800;
-            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 25px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--accent-crimson);
+            display: inline-block;
+            padding-bottom: 4px;
         }
 
-        /* Stats Blocks */
+        /* Stats Specifications Grid */
         .stat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
         }
 
         .stat-box {
-            background: rgba(8, 9, 14, 0.65);
-            border: 1.5px solid rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            padding: 24px;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            background: #0B0B0B;
+            border-left: 3px solid var(--accent-crimson);
+            padding: 16px 20px;
+            border-radius: 0;
+            transition: all 0.2s ease;
         }
-
-        .stat-box::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 5px; height: 100%;
-            background: var(--neon-theme);
-        }
-
-        .stat-box-pink::after { background: var(--neon-pink); }
-        .stat-box-yellow::after { background: var(--neon-yellow); }
-        .stat-box-cyan::after { background: var(--neon-cyan); }
 
         .stat-box:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 10px rgba(163, 0, 0, 0.2);
+            border-left-color: #fff;
         }
 
         .stat-label {
             color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
 
         .stat-value {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.5rem;
+            color: var(--text-primary);
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #fff;
         }
 
         /* Rank Progress System */
         .rank-section {
-            background: rgba(8, 9, 14, 0.5);
-            border: 1.5px solid rgba(255, 255, 255, 0.04);
-            border-radius: 22px;
-            padding: 30px;
-            margin-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 25px;
         }
 
         .rank-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
         }
 
         .rank-title {
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
             text-transform: uppercase;
+            color: var(--text-primary);
             letter-spacing: 1.5px;
         }
 
         .rank-badge {
-            background: linear-gradient(135deg, var(--neon-theme), var(--neon-cyan));
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-size: 0.85rem;
+            background: var(--accent-crimson);
+            border: 1px solid #fff;
+            padding: 5px 15px;
+            border-radius: 0;
+            font-size: 0.8rem;
             font-weight: 800;
-            letter-spacing: 1.5px;
-            box-shadow: 0 0 10px var(--neon-glow);
+            color: #fff;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px var(--accent-crimson-glow);
         }
 
         .progress-bar-cyber {
-            height: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 50px;
+            height: 10px;
+            background: #0B0B0B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 12px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(to right, var(--neon-cyan), var(--neon-theme));
-            box-shadow: 0 0 12px var(--neon-cyan);
-            border-radius: 50px;
-            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: linear-gradient(to right, #800000, var(--accent-crimson));
+            box-shadow: 0 0 10px var(--accent-crimson);
+            transition: width 1s ease-in-out;
         }
 
         .rank-info-text {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-top: 12px;
             display: block;
-            letter-spacing: 0.5px;
         }
 
-        /* Animation class */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        /* Mobile specific layouts */
+        @media (max-width: 991px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .profile-card {
+                padding: 30px 20px;
+            }
+            .border-end {
+                border-end: none !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding-bottom: 30px;
+                margin-bottom: 30px;
             }
         }
 
-        .animate-fade-in {
-            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        @media (max-width: 576px) {
+            .char-name {
+                font-size: 1.5rem;
+            }
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .navbar-brand-cyber {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -375,23 +318,23 @@
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-cyber">
-        <div class="container">
+        <div class="container px-3">
             <a class="navbar-brand-cyber" th:href="@{/guild-hall}">
                 <img th:src="@{/images/guild_logo.jpg}" alt="Logo">
                 GUILD PORTAL
             </a>
-            <div class="d-flex gap-3">
+            <div class="d-flex gap-2">
                 <a th:href="@{/guild-hall}" class="nav-btn">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
-                    Guild Hall Lobby
+                    <span class="d-none d-sm-inline">Lobby</span>
                 </a>
                 <a th:href="@{/logout}" class="nav-btn nav-btn-logout">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
-                    Logout Session
+                    <span class="d-none d-sm-inline">Logout</span>
                 </a>
             </div>
         </div>
@@ -399,19 +342,14 @@
 
     <!-- Main Dashboard Section -->
     <div class="dashboard-container">
-        <div class="container">
-            <!-- Append custom avatar theme class dynamically -->
-            <div class="profile-card animate-fade-in" 
-                 th:classappend="${employee.avatar == 'naruto' ? 'theme-naruto' : 
-                                   employee.avatar == 'luffy' ? 'theme-luffy' : 
-                                   employee.avatar == 'gojo' ? 'theme-gojo' : 
-                                   employee.avatar == 'nezuko' ? 'theme-nezuko' : ''}">
+        <div class="container px-3">
+            
+            <div class="profile-card">
                 <div class="row align-items-center">
                     
                     <!-- Left Side: Character Card -->
                     <div class="col-lg-4 text-center border-end border-secondary border-opacity-10 pe-lg-5">
                         <div class="avatar-container">
-                            <div class="avatar-glow-ring"></div>
                             <div class="avatar-frame">
                                 <img th:src="${employee.avatar == 'naruto' ? '/images/naruto.jpg' : 
                                                employee.avatar == 'luffy' ? '/images/luffy.jpg' : 
@@ -425,8 +363,8 @@
                         <h2 class="char-name" th:text="${employee.name}">Hero Name</h2>
                         <div class="char-alias" th:text="${employee.animeAlias != null && !employee.animeAlias.isEmpty() ? employee.animeAlias : 'Roster Recruit'}">Alias</div>
                         
-                        <a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="nav-btn w-100 mt-4 d-inline-flex justify-content-center" style="border-color: rgba(255, 255, 255, 0.15); color: #fff;">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1">
+                        <a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="nav-btn w-100 mt-4 d-inline-flex justify-content-center" style="height: 48px; display: inline-flex; align-items: center;">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
                             </svg>
                             Edit Profile Stats
@@ -435,7 +373,7 @@
 
                     <!-- Right Side: Details & Stats -->
                     <div class="col-lg-8 ps-lg-5 mt-5 mt-lg-0">
-                        <h3 class="mb-4" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Hero Combat Specifications</h3>
+                        <h3 class="mb-4 text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Hero specifications</h3>
                         
                         <div class="stat-grid">
                             
@@ -445,20 +383,20 @@
                                 <div class="stat-value" th:text="${employee.designation}">S-Rank Defender</div>
                             </div>
                             
-                            <!-- Monthly Gold Payout / Salary -->
-                            <div class="stat-box stat-box-yellow">
+                            <!-- Monthly Gold Payout -->
+                            <div class="stat-box">
                                 <div class="stat-label">Gold Payout (Monthly)</div>
                                 <div class="stat-value" th:text="'$ ' + ${employee.Salary}">10,000 GP</div>
                             </div>
                             
                             <!-- Elemental Affinity -->
-                            <div class="stat-box stat-box-cyan">
+                            <div class="stat-box">
                                 <div class="stat-label">Elemental Affinity</div>
                                 <div class="stat-value" th:text="${employee.magicElement != null && !employee.magicElement.isEmpty() ? employee.magicElement : 'None'}">Shadow</div>
                             </div>
                             
                             <!-- Special Ability -->
-                            <div class="stat-box stat-box-pink">
+                            <div class="stat-box">
                                 <div class="stat-label">Special Ability</div>
                                 <div class="stat-value text-truncate" th:text="${employee.specialAbility != null && !employee.specialAbility.isEmpty() ? employee.specialAbility : 'None'}">Domain Expansion</div>
                             </div>
@@ -486,26 +424,26 @@
             </div>
 
             <!-- Active Missions Section -->
-            <div class="profile-card mt-5 animate-fade-in" style="background: rgba(13, 15, 24, 0.75); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.45);">
-                <h3 class="mb-4 text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; gap: 10px;">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <div class="profile-card mt-5">
+                <h3 class="mb-4 text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-transform: uppercase; display: flex; align-items: center; gap: 10px; letter-spacing: 0.5px;">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     Active Guild Quests
                 </h3>
                 
                 <div th:if="${#lists.isEmpty(activeQuests)}" class="text-secondary text-center py-4">
-                    No active raids at the moment. Visit the <a th:href="@{/guild-hall}" class="text-cyan font-weight-bold" style="color: var(--neon-cyan); text-decoration: none; font-weight: 700;">Guild Social Hall</a> to join cooperative missions!
+                    No active raids at the moment. Visit the <a th:href="@{/guild-hall}" class="text-cyan font-weight-bold" style="color: var(--accent-crimson); text-decoration: none; font-weight: 700;">Guild Social Hall</a> to join cooperative missions!
                 </div>
                 
                 <div class="row g-3" th:if="${!#lists.isEmpty(activeQuests)}">
                     <div class="col-md-6" th:each="q : ${activeQuests}">
-                        <div style="background: rgba(8, 9, 14, 0.65); border: 1.5px solid rgba(0, 240, 255, 0.15); border-radius: 18px; padding: 20px;">
-                            <h4 style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff;" th:text="${q.title}">Quest Title</h4>
+                        <div style="background: #0B0B0B; border-left: 3px solid var(--accent-crimson); padding: 20px;">
+                            <h4 style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff; text-transform: uppercase;" th:text="${q.title}">Quest Title</h4>
                             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;" th:text="${q.description}">Quest description</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #f59e0b; font-size: 0.75rem; padding: 4px 10px; border-radius: 50px;">ACTIVE RAID</span>
-                                <span style="font-size: 0.85rem; font-weight: 700; color: var(--neon-yellow);" th:text="'+' + ${q.powerReward} + ' PWR'">+1,500 PWR</span>
+                                <span class="badge" style="background: rgba(163, 0, 0, 0.1); border: 1px solid var(--accent-crimson); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 0;">ACTIVE RAID</span>
+                                <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);" th:text="'+' + ${q.powerReward} + ' PWR'">+1,500 PWR</span>
                             </div>
                         </div>
                     </div>
