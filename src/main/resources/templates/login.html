@@ -4,73 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guild Hall Login | Salary Management</title>
-    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <!-- Google Fonts: Space Grotesk & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
     <style>
         :root {
-            --bg-color: #0a0b10;
-            --card-bg: rgba(18, 20, 32, 0.65);
-            --neon-pink: #ff007f;
-            --neon-cyan: #00f0ff;
-            --neon-violet: #8b5cf6;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
+            --bg-primary: #0B0B0B;
+            --bg-secondary: #121212;
+            --accent-crimson: #A30000;
+            --accent-crimson-glow: rgba(163, 0, 0, 0.45);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --border-color: rgba(163, 0, 0, 0.35);
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 0, 127, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.15) 0%, transparent 40%);
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 20px;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Cyberpunk grid overlay */
+        /* Diagonal visual textures */
         body::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+            top: 0; left: 0; right: 0; height: 100%;
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.04) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
 
         .login-container {
             width: 100%;
-            max-width: 450px;
-            padding: 20px;
+            max-width: 440px;
             z-index: 10;
         }
 
         .login-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-crimson);
+            border-radius: 0;
             padding: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
-                        0 0 40px rgba(139, 92, 246, 0.15);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .login-card:hover {
-            border-color: rgba(0, 240, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.65), 
+                        0 0 20px var(--accent-crimson-glow);
+            transition: all 0.25s ease;
         }
 
         .logo-area {
@@ -79,46 +67,46 @@
         }
 
         .logo-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-violet));
+            width: 54px;
+            height: 54px;
+            background: rgba(163, 0, 0, 0.1);
+            border: 2px solid var(--accent-crimson);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+            box-shadow: 0 0 15px var(--accent-crimson-glow);
             margin-bottom: 15px;
+            border-radius: 0;
         }
 
         .logo-icon img {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             object-fit: contain;
         }
 
         .guild-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             letter-spacing: 1px;
-            background: linear-gradient(to right, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
+            text-transform: uppercase;
             margin-bottom: 5px;
         }
 
         .guild-subtitle {
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 300;
-            margin-bottom: 25px;
         }
 
+        /* Form Controls */
         .form-label {
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-weight: 600;
             margin-bottom: 8px;
         }
@@ -129,87 +117,92 @@
         }
 
         .form-control-cyber {
-            background: rgba(10, 11, 16, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
+            background: #0B0B0B;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
             color: var(--text-primary);
-            padding: 14px 16px;
-            font-size: 1rem;
+            padding: 12px 16px;
+            font-size: 0.95rem;
             transition: all 0.25s ease;
             width: 100%;
         }
 
         .form-control-cyber:focus {
-            background: rgba(10, 11, 16, 0.95);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+            background: #000;
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 12px var(--accent-crimson-glow);
             outline: none;
             color: #fff;
         }
 
+        /* Alert System */
+        .alert-cyber {
+            background: rgba(163, 0, 0, 0.1);
+            border-left: 3px solid var(--accent-crimson);
+            color: #ffcccc;
+            border-radius: 0;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success-cyber {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            color: #d1fae5;
+        }
+
         .btn-cyber {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-violet) 100%);
+            background: var(--accent-crimson);
             border: none;
-            border-radius: 12px;
+            border-radius: 0;
             color: #fff;
-            padding: 14px;
-            font-size: 1rem;
+            padding: 12px 20px;
+            font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             width: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
-            margin-top: 10px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(163, 0, 0, 0.3);
         }
 
         .btn-cyber:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.5), 
-                        0 0 15px rgba(139, 92, 246, 0.3);
-            filter: brightness(1.1);
-        }
-
-        .btn-cyber:active {
-            transform: translateY(0);
-        }
-
-        .alert-cyber {
-            background: rgba(220, 38, 38, 0.15);
-            border: 1px solid rgba(220, 38, 38, 0.4);
-            color: #f87171;
-            border-radius: 12px;
-            padding: 12px 16px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: shake 0.4s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            background: #c30000;
+            box-shadow: 0 0 15px var(--accent-crimson-glow);
         }
 
         .nav-links {
             text-align: center;
             margin-top: 25px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .nav-links a {
-            color: var(--neon-cyan);
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
+            transition: all 0.2s ease;
             font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .nav-links a:hover {
-            color: #fff;
-            text-shadow: 0 0 8px var(--neon-cyan);
+            color: var(--text-primary);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Mobile specific spacing */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            .guild-title {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
@@ -228,30 +221,37 @@
 
             <!-- Error Banner -->
             <div th:if="${error}" class="alert-cyber">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
                 </svg>
                 <span th:text="${error}"></span>
             </div>
 
+            <!-- Success Registration Notification -->
+            <div th:if="${registeredSuccess}" class="alert-cyber alert-success-cyber">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span th:text="${registeredSuccess}"></span>
+            </div>
+
             <form th:action="@{/login}" method="POST">
                 
                 <div class="input-group-cyber">
-                    <label for="id" class="form-label">Employee / Hero ID</label>
+                    <label for="id" class="form-label">Hero / Employee ID</label>
                     <input type="number" name="id" id="id" class="form-control-cyber" placeholder="e.g. 1001" required autocomplete="username">
                 </div>
-
+                
                 <div class="input-group-cyber">
-                    <label for="password" class="form-label">Access Passcode</label>
+                    <label for="password" class="form-label">Hero Passcode</label>
                     <input type="password" name="password" id="password" class="form-control-cyber" placeholder="••••••••" required autocomplete="current-password">
                 </div>
 
-                <button type="submit" class="btn-cyber">Verify Identity</button>
-
+                <button type="submit" class="btn-cyber">Access Hall</button>
             </form>
 
             <div class="nav-links">
-                <a th:href="@{/index}">← Back to Guild Directory</a>
+                <a th:href="@{/}">← Back to Guild Portal</a>
             </div>
 
         </div>
