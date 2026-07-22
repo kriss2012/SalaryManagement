@@ -1,52 +1,307 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Hero Stats | Guild Portal</title>
+    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
+    <style>
+        :root {
+            --bg-color: #06070a;
+            --card-bg: rgba(13, 15, 24, 0.75);
+            --neon-pink: #ff007f;
+            --neon-cyan: #00f0ff;
+            --neon-violet: #8b5cf6;
+            --neon-yellow: #ffb703;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.12) 0%, transparent 40%);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scanline gaming grid */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .update-container {
+            width: 100%;
+            max-width: 650px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        /* Dynamic theme coloring on edit card based on avatar selected */
+        .theme-naruto {
+            --neon-theme: #ff7a00;
+            --neon-glow: rgba(255, 122, 0, 0.25);
+        }
+        .theme-luffy {
+            --neon-theme: #ff003c;
+            --neon-glow: rgba(255, 0, 60, 0.25);
+        }
+        .theme-gojo {
+            --neon-theme: #00f0ff;
+            --neon-glow: rgba(0, 240, 255, 0.25);
+        }
+        .theme-nezuko {
+            --neon-theme: #ff00a0;
+            --neon-glow: rgba(255, 0, 160, 0.25);
+        }
+
+        .update-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            padding: 45px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .update-card:hover {
+            border-color: var(--neon-theme);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
+                        0 0 30px var(--neon-glow);
+        }
+
+        .panel-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 35px;
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+        }
+
+        .panel-heading svg {
+            color: var(--neon-cyan);
+        }
+
+        /* Form styling */
+        .form-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-control-cyber {
+            background: rgba(6, 7, 10, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 100%;
+        }
+
+        .form-control-cyber:focus {
+            background: rgba(6, 7, 10, 0.98);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+            outline: none;
+            color: #fff;
+        }
+
+        .form-control-cyber:disabled, .form-control-cyber[readonly] {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Dropdown custom look */
+        select.form-control-cyber {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 14px;
+            padding-right: 45px;
+        }
+
+        .btn-cyber {
+            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-violet) 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            padding: 14px 35px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+        }
+
+        .btn-cyber:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary-cyber {
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: var(--text-primary);
+            padding: 12px 25px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-secondary-cyber:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #fff;
+            color: #fff;
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">SALARY MANAGEMENT</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-            </div>
-          </div>
-        </div>
-      </nav>
 
-          <form class="row g-3 mt-5" th:action="@{/employees/{id} (id=${employees2.id})}" th:object="${employees2}" method="POST">
-            <div class="col-md-6">
-              <label for="inputEmail4" class="form-label">Employee ID </label>
-              <input type="text" class="form-control" id="inputEmail4" th:field="*{id}">
-            </div>
-            <div class="col-md-6">
-              <label for="inputPassword4" class="form-label">Employee Name</label>
-              <input type="text" class="form-control" id="inputPassword4" th:field="*{name}">
-            </div>
-
-            <div class="col-md-6">
-              <label for="inputPassword4" class="form-label">Employee Designation</label>
-              <input type="text" class="form-control" id="inputPassword4" th:field="*{designation}">
-            </div>
-
+    <div class="update-container">
+        <!-- Add condition to dynamically color card border to match the character's style -->
+        <div class="update-card animate-fade-in"
+             th:classappend="${employees2.avatar == 'naruto' ? 'theme-naruto' : 
+                               employees2.avatar == 'luffy' ? 'theme-luffy' : 
+                               employees2.avatar == 'gojo' ? 'theme-gojo' : 
+                               employees2.avatar == 'nezuko' ? 'theme-nezuko' : ''}">
             
-            <div class="col-md-6">
-              <label for="inputPassword4" class="form-label">Employee Salary</label>
-              <input type="text" class="form-control" id="inputPassword4" th:field="*{Salary}">
-            </div>
-           
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-          </form>
-      </div>
+            <h2 class="panel-heading">
+                <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+                Modify Hero Specifications
+            </h2>
+
+            <form class="row g-4" th:action="@{/employees/{id} (id=${employees2.id})}" th:object="${employees2}" method="POST">
+                
+                <div class="col-md-6">
+                    <label for="id" class="form-label">Registry Roster ID</label>
+                    <input type="text" class="form-control-cyber" id="id" th:field="*{id}" readonly>
+                </div>
+                
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Hero Name</label>
+                    <input type="text" class="form-control-cyber" id="name" th:field="*{name}" required placeholder="Hero Name">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="password" class="form-label">Access Passcode</label>
+                    <input type="password" class="form-control-cyber" id="password" th:field="*{password}" required placeholder="Passcode">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="designation" class="form-label">Guild Designation</label>
+                    <input type="text" class="form-control-cyber" id="designation" th:field="*{designation}" required placeholder="Guild Rank">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="salary" class="form-label">Monthly Gold Payout ($)</label>
+                    <input type="number" step="0.01" class="form-control-cyber" id="salary" th:field="*{Salary}" required placeholder="Salary">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="animeAlias" class="form-label">Anime Alias / Title</label>
+                    <input type="text" class="form-control-cyber" id="animeAlias" th:field="*{animeAlias}" placeholder="Alias Title">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="avatar" class="form-label">Avatar Class</label>
+                    <select class="form-control-cyber" id="avatar" th:field="*{avatar}">
+                        <option value="naruto">Naruto (Ninja)</option>
+                        <option value="luffy">Luffy (Pirate)</option>
+                        <option value="gojo">Gojo (Sorcerer)</option>
+                        <option value="nezuko">Nezuko (Demon)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="powerLevel" class="form-label">Combat Power Level</label>
+                    <input type="number" class="form-control-cyber" id="powerLevel" th:field="*{powerLevel}" min="1" max="100000" placeholder="Power Level">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="magicElement" class="form-label">Elemental Affinity</label>
+                    <input type="text" class="form-control-cyber" id="magicElement" th:field="*{magicElement}" placeholder="Fire, Light, Spirit">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="specialAbility" class="form-label">Special Ability</label>
+                    <input type="text" class="form-control-cyber" id="specialAbility" th:field="*{specialAbility}" placeholder="Kamehameha">
+                </div>
+
+                <div class="col-12 mt-5 d-flex justify-content-between align-items-center">
+                    <a th:href="@{/index}" class="btn-secondary-cyber">Cancel Modifications</a>
+                    <button type="submit" class="btn-cyber">Apply Changes</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
