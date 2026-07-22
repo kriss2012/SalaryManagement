@@ -484,6 +484,34 @@
 
                 </div>
             </div>
+
+            <!-- Active Missions Section -->
+            <div class="profile-card mt-5 animate-fade-in" style="background: rgba(13, 15, 24, 0.75); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.45);">
+                <h3 class="mb-4 text-white" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; display: flex; align-items: center; gap: 10px;">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Active Guild Quests
+                </h3>
+                
+                <div th:if="${#lists.isEmpty(activeQuests)}" class="text-secondary text-center py-4">
+                    No active raids at the moment. Visit the <a th:href="@{/guild-hall}" class="text-cyan font-weight-bold" style="color: var(--neon-cyan); text-decoration: none; font-weight: 700;">Guild Social Hall</a> to join cooperative missions!
+                </div>
+                
+                <div class="row g-3" th:if="${!#lists.isEmpty(activeQuests)}">
+                    <div class="col-md-6" th:each="q : ${activeQuests}">
+                        <div style="background: rgba(8, 9, 14, 0.65); border: 1.5px solid rgba(0, 240, 255, 0.15); border-radius: 18px; padding: 20px;">
+                            <h4 style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff;" th:text="${q.title}">Quest Title</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;" th:text="${q.description}">Quest description</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge" style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #f59e0b; font-size: 0.75rem; padding: 4px 10px; border-radius: 50px;">ACTIVE RAID</span>
+                                <span style="font-size: 0.85rem; font-weight: 700; color: var(--neon-yellow);" th:text="'+' + ${q.powerReward} + ' PWR'">+1,500 PWR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
