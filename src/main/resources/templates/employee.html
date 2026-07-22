@@ -1,71 +1,547 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guild Registry | Salary Management</title>
+    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
+    <style>
+        :root {
+            --bg-color: #06070a;
+            --card-bg: rgba(13, 15, 24, 0.75);
+            --neon-pink: #ff007f;
+            --neon-cyan: #00f0ff;
+            --neon-violet: #8b5cf6;
+            --neon-yellow: #ffb703;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --neon-theme: #8b5cf6;
+            --neon-glow: rgba(139, 92, 246, 0.25);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 5% 5%, rgba(139, 92, 246, 0.12) 0%, transparent 35%),
+                radial-gradient(circle at 95% 95%, rgba(0, 240, 255, 0.12) 0%, transparent 35%);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scanline gaming grid */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar-cyber {
+            background: rgba(8, 9, 14, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 18px 0;
+            margin-bottom: 50px;
+            z-index: 100;
+        }
+
+        .navbar-brand-cyber {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand-cyber img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .nav-btn {
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 10px 22px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--neon-cyan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Panel Styling */
+        .cyber-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+            height: 100%;
+        }
+
+        .panel-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+        }
+
+        .panel-heading svg {
+            color: var(--neon-cyan);
+        }
+
+        /* Form styling */
+        .form-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-control-cyber {
+            background: rgba(6, 7, 10, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .form-control-cyber:focus {
+            background: rgba(6, 7, 10, 0.98);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+            outline: none;
+            color: #fff;
+        }
+
+        /* Dropdown custom look */
+        select.form-control-cyber {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 14px;
+            padding-right: 45px;
+        }
+
+        .btn-cyber {
+            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-violet) 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            padding: 14px 30px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+        }
+
+        .btn-cyber:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.5);
+            filter: brightness(1.1);
+        }
+
+        /* Dynamic character themes */
+        .theme-naruto {
+            --neon-theme: #ff7a00;
+            --neon-glow: rgba(255, 122, 0, 0.3);
+        }
+        .theme-luffy {
+            --neon-theme: #ff003c;
+            --neon-glow: rgba(255, 0, 60, 0.3);
+        }
+        .theme-gojo {
+            --neon-theme: #00f0ff;
+            --neon-glow: rgba(0, 240, 255, 0.3);
+        }
+        .theme-nezuko {
+            --neon-theme: #ff00a0;
+            --neon-glow: rgba(255, 0, 160, 0.3);
+        }
+
+        /* Character cards list */
+        .char-card {
+            background: rgba(14, 16, 27, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .char-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-theme);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                        0 0 25px var(--neon-glow);
+        }
+
+        .card-header-pic {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1.5;
+            overflow: hidden;
+            background: #0f1016;
+            border-bottom: 1.5px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .char-card:hover .card-avatar {
+            transform: scale(1.1);
+        }
+
+        .card-power-badge {
+            position: absolute;
+            top: 14px; right: 14px;
+            background: rgba(8, 9, 14, 0.9);
+            border: 1.5px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 50px;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 10px rgba(255, 183, 3, 0.35);
+        }
+
+        .card-body-cyber {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-char-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .card-char-alias {
+            font-size: 0.85rem;
+            color: var(--neon-theme);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .card-stat-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .card-stat-label {
+            color: var(--text-secondary);
+        }
+
+        .card-stat-value {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .card-actions {
+            margin-top: auto;
+            padding-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-card-edit {
+            flex: 1;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: transparent;
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-card-edit:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--neon-cyan);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+        }
+
+        .btn-card-delete {
+            border: 1.5px solid rgba(220, 38, 38, 0.4);
+            background: transparent;
+            color: #f87171;
+            border-radius: 10px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-card-delete:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: #ef4444;
+            color: #fca5a5;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Spacings and grid alignment */
+        .guild-grid {
+            margin-top: 10px;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .anim-delay-1 { animation-delay: 0.15s; }
+        .anim-delay-2 { animation-delay: 0.3s; }
+    </style>
 </head>
 <body>
-<div class="container">
-      <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-      <img th:src="@{/salary_6847787.png}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-      SALARY MANAGEMENT TOOL
-    </a>
-  </div>
-</nav>
-          <form class="row g-3 mt-5" th:action="@{/index1}" th:object="${employees1}" method="POST">
-            <div class="col-md-6">
-              <label for="id" class="form-label">Employee ID </label>
-              <input type="text" value="" placeholder="Enter your ID" class="form-control" id="id" th:field="*{id}">
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-cyber">
+        <div class="container">
+            <a class="navbar-brand-cyber" th:href="@{/index}">
+                <img th:src="@{/images/guild_logo.jpg}" alt="Logo">
+                GUILD REGISTER
+            </a>
+            <div class="d-flex gap-3">
+                <a th:href="@{/login}" class="nav-btn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Hero Dashboard Login
+                </a>
             </div>
-            <div class="col-md-6">
-              <label for="name" class="form-label">Employee Name</label>
-              <input type="text" class="form-control" placeholder="Enter your name" id="name" th:field="*{name}">
+        </div>
+    </nav>
+
+    <div class="container z-3 position-relative">
+        <div class="row g-5">
+            
+            <!-- Left Side: Roster Card Grid -->
+            <div class="col-lg-8 order-lg-1 order-2 animate-fade-in anim-delay-1">
+                <div class="cyber-panel">
+                    <h2 class="panel-heading">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        Hero Roster Registry
+                    </h2>
+                    
+                    <div class="row g-4 guild-grid">
+                        <!-- Iteration over Employees -->
+                        <div class="col-md-6" th:each="emp : ${employees}">
+                            <!-- Classappend custom theme class based on avatar field -->
+                            <div class="char-card" 
+                                 th:classappend="${emp.avatar == 'naruto' ? 'theme-naruto' : 
+                                                   emp.avatar == 'luffy' ? 'theme-luffy' : 
+                                                   emp.avatar == 'gojo' ? 'theme-gojo' : 
+                                                   emp.avatar == 'nezuko' ? 'theme-nezuko' : ''}">
+                                <div class="card-header-pic">
+                                    <img th:src="${emp.avatar == 'naruto' ? '/images/naruto.jpg' : 
+                                                   emp.avatar == 'luffy' ? '/images/luffy.jpg' : 
+                                                   emp.avatar == 'gojo' ? '/images/gojo.jpg' : 
+                                                   emp.avatar == 'nezuko' ? '/images/nezuko.jpg' : '/salary_6847787.png'}" 
+                                         class="card-avatar" alt="Avatar">
+                                    <div class="card-power-badge" th:text="'PWR: ' + ${emp.powerLevel}">PWR: 1000</div>
+                                </div>
+                                <div class="card-body-cyber">
+                                    <h3 class="card-char-name" th:text="${emp.name}">Name</h3>
+                                    <div class="card-char-alias" th:text="${emp.animeAlias != null && !emp.animeAlias.isEmpty() ? emp.animeAlias : 'Roster Class Member'}">Alias</div>
+                                    
+                                    <div class="card-stat-line">
+                                        <span class="card-stat-label">Guild Designation</span>
+                                        <span class="card-stat-value" th:text="${emp.designation}">Designation</span>
+                                    </div>
+                                    <div class="card-stat-line">
+                                        <span class="card-stat-label">Gold Payout (Monthly)</span>
+                                        <span class="card-stat-value" th:text="'$ ' + ${emp.Salary}">Salary</span>
+                                    </div>
+                                    <div class="card-stat-line">
+                                        <span class="card-stat-label">Elemental Affinity</span>
+                                        <span class="card-stat-value" th:text="${emp.magicElement != null && !emp.magicElement.isEmpty() ? emp.magicElement : 'None'}">Element</span>
+                                    </div>
+                                    <div class="card-stat-line">
+                                        <span class="card-stat-label">Special Ability</span>
+                                        <span class="card-stat-value text-truncate" style="max-width: 155px;" th:text="${emp.specialAbility != null && !emp.specialAbility.isEmpty() ? emp.specialAbility : 'None'}">Ability</span>
+                                    </div>
+                                    
+                                    <div class="card-actions">
+                                        <a th:href="@{/employee/edit/{id}(id=${emp.id})}" class="btn-card-edit">Edit Stats</a>
+                                        <a th:href="@{/employee/{id}(id=${emp.id})}" class="btn-card-delete" onclick="return confirm('Are you sure you want to dismiss this hero from the guild?');">Dismiss</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-6">
-              <label for="designation" class="form-label">Employee Designation</label>
-              <input type="text" class="form-control" placeholder="Enter your Designation" id="designation" th:field="*{designation}">
-            </div>
-            <div class="col-md-6">
-              <label for="salary" class="form-label">Employee Salary</label>
-              <input type="text" class="form-control" placeholder="Enter your Salary" id="salary" th:field="*{Salary}">
-            </div>
-           
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Add </button>
-            </div>
-          </form>
+            <!-- Right Side: Recruit/Add Form -->
+            <div class="col-lg-4 order-lg-2 order-1 animate-fade-in anim-delay-2">
+                <div class="cyber-panel">
+                    <h2 class="panel-heading">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                        Recruit Hero
+                    </h2>
+                    
+                    <form class="row g-4" th:action="@{/index1}" th:object="${employees1}" method="POST">
+                        
+                        <div class="col-12">
+                            <label for="id" class="form-label">Registry ID</label>
+                            <input type="number" class="form-control-cyber w-100" id="id" th:field="*{id}" required placeholder="e.g. 1001">
+                        </div>
 
-          <table class="table mt-5">
-            <thead>
-              <tr>
-                <h1 style="text-align: center;">Employee Data</h1>
-                <th scope="col">Employee ID </th>
-                <th scope="col">Employee Name</th>
-                <th scope="col">Employee Designation</th>
-                <th scope="col">Employee Salary</th>
-                 <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each ="employees : ${employees}"> 
-                <th scope="row" th:text="${employees.id}"></th>
-                <td th:text="${employees.name}"></td>
-                <td th:text="${employees.designation}"></td>
-                <td th:text="${employees.Salary}"></td>
-                     <th>
-                     <a th:href="@{/employee/edit/{id}(id=${employees.id})}" class="btn btn-primary">Update</a>
-                      <a th:href="@{/employee/{id}(id=${employees.id})}" class="btn btn-danger">Delete</a>
-                     </th>
-              </tr>
-             
-            </tbody>
-          </table>
-      </div>
+                        <div class="col-12">
+                            <label for="name" class="form-label">Hero Name</label>
+                            <input type="text" class="form-control-cyber w-100" id="name" th:field="*{name}" required placeholder="e.g. Goku">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="password" class="form-label">Access Passcode</label>
+                            <input type="password" class="form-control-cyber w-100" id="password" th:field="*{password}" required placeholder="e.g. password">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="designation" class="form-label">Guild Designation</label>
+                            <input type="text" class="form-control-cyber w-100" id="designation" th:field="*{designation}" required placeholder="e.g. Frontline Vanguard">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="salary" class="form-label">Monthly Gold Payout ($)</label>
+                            <input type="number" step="0.01" class="form-control-cyber w-100" id="salary" th:field="*{Salary}" required placeholder="e.g. 9500">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="animeAlias" class="form-label">Anime Alias / Title</label>
+                            <input type="text" class="form-control-cyber w-100" id="animeAlias" th:field="*{animeAlias}" placeholder="e.g. Universe Protector">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="avatar" class="form-label">Avatar Class</label>
+                            <select class="form-control-cyber w-100" id="avatar" th:field="*{avatar}">
+                                <option value="naruto">Naruto (Ninja)</option>
+                                <option value="luffy">Luffy (Pirate)</option>
+                                <option value="gojo">Gojo (Sorcerer)</option>
+                                <option value="nezuko">Nezuko (Demon)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="powerLevel" class="form-label">Combat Power Level</label>
+                            <input type="number" class="form-control-cyber w-100" id="powerLevel" th:field="*{powerLevel}" min="1" max="100000" placeholder="1 to 100000">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="magicElement" class="form-label">Elemental Affinity</label>
+                            <input type="text" class="form-control-cyber w-100" id="magicElement" th:field="*{magicElement}" placeholder="e.g. Shadow, Fire, Void">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="specialAbility" class="form-label">Special Ability</label>
+                            <input type="text" class="form-control-cyber w-100" id="specialAbility" th:field="*{specialAbility}" placeholder="e.g. Rasengan">
+                        </div>
+
+                        <div class="col-12 mt-4 text-center">
+                            <button type="submit" class="btn-cyber w-100">Enroll Hero</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
