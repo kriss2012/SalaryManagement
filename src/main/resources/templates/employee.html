@@ -1,0 +1,71 @@
+ <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+<div class="container">
+      <nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img th:src="@{/salary_6847787.png}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+      SALARY MANAGEMENT TOOL
+    </a>
+  </div>
+</nav>
+          <form class="row g-3 mt-5" th:action="@{/index1}" th:object="${employees1}" method="POST">
+            <div class="col-md-6">
+              <label for="id" class="form-label">Employee ID </label>
+              <input type="text" value="" placeholder="Enter your ID" class="form-control" id="id" th:field="*{id}">
+            </div>
+            <div class="col-md-6">
+              <label for="name" class="form-label">Employee Name</label>
+              <input type="text" class="form-control" placeholder="Enter your name" id="name" th:field="*{name}">
+            </div>
+
+            <div class="col-md-6">
+              <label for="designation" class="form-label">Employee Designation</label>
+              <input type="text" class="form-control" placeholder="Enter your Designation" id="designation" th:field="*{designation}">
+            </div>
+            <div class="col-md-6">
+              <label for="salary" class="form-label">Employee Salary</label>
+              <input type="text" class="form-control" placeholder="Enter your Salary" id="salary" th:field="*{Salary}">
+            </div>
+           
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Add </button>
+            </div>
+          </form>
+
+          <table class="table mt-5">
+            <thead>
+              <tr>
+                <h1 style="text-align: center;">Employee Data</h1>
+                <th scope="col">Employee ID </th>
+                <th scope="col">Employee Name</th>
+                <th scope="col">Employee Designation</th>
+                <th scope="col">Employee Salary</th>
+                 <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each ="employees : ${employees}"> 
+                <th scope="row" th:text="${employees.id}"></th>
+                <td th:text="${employees.name}"></td>
+                <td th:text="${employees.designation}"></td>
+                <td th:text="${employees.Salary}"></td>
+                     <th>
+                     <a th:href="@{/employee/edit/{id}(id=${employees.id})}" class="btn btn-primary">Update</a>
+                      <a th:href="@{/employee/{id}(id=${employees.id})}" class="btn btn-danger">Delete</a>
+                     </th>
+              </tr>
+             
+            </tbody>
+          </table>
+      </div>
+</body>
+</html>
