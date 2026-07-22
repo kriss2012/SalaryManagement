@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Profile | Guild Portal</title>
+    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <style>
+        :root {
+            --bg-color: #06070a;
+            --card-bg: rgba(13, 15, 24, 0.75);
+            --neon-pink: #ff007f;
+            --neon-cyan: #00f0ff;
+            --neon-violet: #8b5cf6;
+            --neon-yellow: #ffb703;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --neon-theme: #8b5cf6;
+            --neon-glow: rgba(139, 92, 246, 0.25);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 5% 5%, rgba(139, 92, 246, 0.12) 0%, transparent 35%),
+                radial-gradient(circle at 95% 95%, rgba(0, 240, 255, 0.12) 0%, transparent 35%);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Scanline gaming grid */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navbar Styling */
+        .navbar-cyber {
+            background: rgba(8, 9, 14, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 18px 0;
+            z-index: 100;
+        }
+
+        .navbar-brand-cyber {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand-cyber img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .nav-btn {
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 10px 22px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--neon-cyan);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn-logout {
+            border-color: rgba(220, 38, 38, 0.4);
+            color: #f87171;
+        }
+
+        .nav-btn-logout:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: #ef4444;
+            color: #fca5a5;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Profile Card Wrapper */
+        .dashboard-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 50px 0;
+            z-index: 10;
+        }
+
+        /* Dynamic Themes */
+        .theme-naruto {
+            --neon-theme: #ff7a00;
+            --neon-glow: rgba(255, 122, 0, 0.35);
+        }
+        .theme-luffy {
+            --neon-theme: #ff003c;
+            --neon-glow: rgba(255, 0, 60, 0.35);
+        }
+        .theme-gojo {
+            --neon-theme: #00f0ff;
+            --neon-glow: rgba(0, 240, 255, 0.35);
+        }
+        .theme-nezuko {
+            --neon-theme: #ff00a0;
+            --neon-glow: rgba(255, 0, 160, 0.35);
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 30px 65px rgba(0, 0, 0, 0.65);
+            padding: 50px;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .profile-card:hover {
+            border-color: var(--neon-theme);
+            box-shadow: 0 30px 65px rgba(0, 0, 0, 0.65),
+                        0 0 40px var(--neon-glow);
+        }
+
+        /* Character Frame & Avatar */
+        .avatar-container {
+            position: relative;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto 35px auto;
+        }
+
+        .avatar-glow-ring {
+            position: absolute;
+            top: -6px; left: -6px; right: -6px; bottom: -6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-theme), var(--neon-cyan), var(--neon-pink));
+            z-index: 1;
+            animation: rotateGlow 8s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
+        }
+
+        .avatar-frame {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 5px solid var(--bg-color);
+            overflow: hidden;
+            background: #0f1016;
+            box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .avatar-container:hover .avatar-img {
+            transform: scale(1.1);
+        }
+
+        /* Power level badge */
+        .power-badge {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            background: #08090d;
+            border: 1.5px solid var(--neon-yellow);
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+            border-radius: 50px;
+            padding: 8px 24px;
+            font-size: 0.9rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            color: var(--neon-yellow);
+        }
+
+        /* Identity Details */
+        .char-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 2.4rem;
+            margin-bottom: 4px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .char-alias {
+            font-size: 1.1rem;
+            color: var(--neon-theme);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* Stats Blocks */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-box {
+            background: rgba(8, 9, 14, 0.65);
+            border: 1.5px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 5px; height: 100%;
+            background: var(--neon-theme);
+        }
+
+        .stat-box-pink::after { background: var(--neon-pink); }
+        .stat-box-yellow::after { background: var(--neon-yellow); }
+        .stat-box-cyan::after { background: var(--neon-cyan); }
+
+        .stat-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Rank Progress System */
+        .rank-section {
+            background: rgba(8, 9, 14, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.04);
+            border-radius: 22px;
+            padding: 30px;
+            margin-top: 35px;
+        }
+
+        .rank-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .rank-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .rank-badge {
+            background: linear-gradient(135deg, var(--neon-theme), var(--neon-cyan));
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .progress-bar-cyber {
+            height: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-theme));
+            box-shadow: 0 0 12px var(--neon-cyan);
+            border-radius: 50px;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .rank-info-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            display: block;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animation class */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-cyber">
+        <div class="container">
+            <a class="navbar-brand-cyber" th:href="@{/guild-hall}">
+                <img th:src="@{/images/guild_logo.jpg}" alt="Logo">
+                GUILD PORTAL
+            </a>
+            <div class="d-flex gap-3">
+                <a th:href="@{/guild-hall}" class="nav-btn">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Guild Hall Lobby
+                </a>
+                <a th:href="@{/logout}" class="nav-btn nav-btn-logout">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    Logout Session
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Section -->
+    <div class="dashboard-container">
+        <div class="container">
+            <!-- Append custom avatar theme class dynamically -->
+            <div class="profile-card animate-fade-in" 
+                 th:classappend="${employee.avatar == 'naruto' ? 'theme-naruto' : 
+                                   employee.avatar == 'luffy' ? 'theme-luffy' : 
+                                   employee.avatar == 'gojo' ? 'theme-gojo' : 
+                                   employee.avatar == 'nezuko' ? 'theme-nezuko' : ''}">
+                <div class="row align-items-center">
+                    
+                    <!-- Left Side: Character Card -->
+                    <div class="col-lg-4 text-center border-end border-secondary border-opacity-10 pe-lg-5">
+                        <div class="avatar-container">
+                            <div class="avatar-glow-ring"></div>
+                            <div class="avatar-frame">
+                                <img th:src="${employee.avatar == 'naruto' ? '/images/naruto.jpg' : 
+                                               employee.avatar == 'luffy' ? '/images/luffy.jpg' : 
+                                               employee.avatar == 'gojo' ? '/images/gojo.jpg' : 
+                                               employee.avatar == 'nezuko' ? '/images/nezuko.jpg' : '/salary_6847787.png'}" 
+                                     class="avatar-img" alt="Avatar">
+                            </div>
+                            <div class="power-badge" th:text="'POWER: ' + ${employee.powerLevel}">POWER: 9000</div>
+                        </div>
+
+                        <h2 class="char-name" th:text="${employee.name}">Hero Name</h2>
+                        <div class="char-alias" th:text="${employee.animeAlias != null && !employee.animeAlias.isEmpty() ? employee.animeAlias : 'Roster Recruit'}">Alias</div>
+                    </div>
+
+                    <!-- Right Side: Details & Stats -->
+                    <div class="col-lg-8 ps-lg-5 mt-5 mt-lg-0">
+                        <h3 class="mb-4" style="font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.5px;">Hero Combat Specifications</h3>
+                        
+                        <div class="stat-grid">
+                            
+                            <!-- Guild Rank / Designation -->
+                            <div class="stat-box">
+                                <div class="stat-label">Guild Designation</div>
+                                <div class="stat-value" th:text="${employee.designation}">S-Rank Defender</div>
+                            </div>
+                            
+                            <!-- Monthly Gold Payout / Salary -->
+                            <div class="stat-box stat-box-yellow">
+                                <div class="stat-label">Gold Payout (Monthly)</div>
+                                <div class="stat-value" th:text="'$ ' + ${employee.Salary}">10,000 GP</div>
+                            </div>
+                            
+                            <!-- Elemental Affinity -->
+                            <div class="stat-box stat-box-cyan">
+                                <div class="stat-label">Elemental Affinity</div>
+                                <div class="stat-value" th:text="${employee.magicElement != null && !employee.magicElement.isEmpty() ? employee.magicElement : 'None'}">Shadow</div>
+                            </div>
+                            
+                            <!-- Special Ability -->
+                            <div class="stat-box stat-box-pink">
+                                <div class="stat-label">Special Ability</div>
+                                <div class="stat-value text-truncate" th:text="${employee.specialAbility != null && !employee.specialAbility.isEmpty() ? employee.specialAbility : 'None'}">Domain Expansion</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Rank Progress Bar -->
+                        <div class="rank-section">
+                            <div class="rank-header">
+                                <span class="rank-title">Class Rank Tier</span>
+                                <span class="rank-badge" th:text="${employee.powerLevel >= 90000 ? 'SSS-CLASS' : 
+                                                                     employee.powerLevel >= 50000 ? 'SS-CLASS' : 
+                                                                     employee.powerLevel >= 20000 ? 'S-CLASS' : 
+                                                                     employee.powerLevel >= 9000 ? 'A-CLASS' : 'B-CLASS'}">S-CLASS</span>
+                            </div>
+                            <div class="progress-bar-cyber">
+                                <div class="progress-fill" th:style="'width: ' + ${employee.powerLevel * 100.0 / 100000.0} + '%'"></div>
+                            </div>
+                            <span class="rank-info-text" th:text="'Registry ID: #' + ${employee.id} + ' • Complete missions and earn gold to raise your combat stats.'">Registry ID: #1001</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
