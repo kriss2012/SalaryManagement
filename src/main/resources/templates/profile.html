@@ -424,6 +424,13 @@
 
                         <h2 class="char-name" th:text="${employee.name}">Hero Name</h2>
                         <div class="char-alias" th:text="${employee.animeAlias != null && !employee.animeAlias.isEmpty() ? employee.animeAlias : 'Roster Recruit'}">Alias</div>
+                        
+                        <a th:href="@{/employee/edit/{id}(id=${employee.id})}" class="nav-btn w-100 mt-4 d-inline-flex justify-content-center" style="border-color: rgba(255, 255, 255, 0.15); color: #fff;">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="me-1">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                            </svg>
+                            Edit Profile Stats
+                        </a>
                     </div>
 
                     <!-- Right Side: Details & Stats -->
