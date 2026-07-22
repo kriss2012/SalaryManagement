@@ -120,9 +120,12 @@
             padding: 30px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.65), 
                         0 0 20px var(--accent-crimson-glow);
-            height: 100%;
             display: flex;
             flex-direction: column;
+        }
+
+        .chat-panel {
+            height: 100%;
         }
 
         .panel-heading {
@@ -147,8 +150,7 @@
         /* 1. Global Chat Room Styles */
         .chat-box {
             flex: 1;
-            min-height: 450px;
-            max-height: 520px;
+            min-height: 350px;
             overflow-y: auto;
             background: #0B0B0B;
             border: 1px solid var(--border-color);
@@ -516,7 +518,7 @@
                 
                 <!-- Left Column: Chat Lobby -->
                 <div class="col-lg-6">
-                    <div class="cyber-panel">
+                    <div class="cyber-panel chat-panel">
                         <h2 class="panel-heading">
                             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
