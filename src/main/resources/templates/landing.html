@@ -3,133 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adventurers Portal | Guild & Raid SaaS Platform</title>
-    <!-- Google Fonts: Space Grotesk & Outfit -->
+    <title>Adventurers Portal | Guild Platform</title>
+    <!-- Google Fonts: Space Grotesk & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
     <style>
         :root {
-            --bg-color: #06070a;
-            --card-bg: rgba(13, 15, 24, 0.7);
-            --neon-pink: #ff007f;
-            --neon-cyan: #00f0ff;
-            --neon-violet: #8b5cf6;
-            --neon-yellow: #ffb703;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
+            --bg-primary: #0B0B0B;
+            --bg-secondary: #121212;
+            --accent-crimson: #A30000;
+            --accent-crimson-glow: rgba(163, 0, 0, 0.45);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3B3B3;
+            --border-color: rgba(163, 0, 0, 0.35);
         }
 
         body {
-            background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.15) 0%, transparent 40%);
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Scanline gaming grid */
+        /* Diagonal visual textures */
         body::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 45px 45px;
+            top: 0; left: 0; right: 0; height: 600px;
+            background: linear-gradient(135deg, rgba(163, 0, 0, 0.04) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
 
         /* Navbar Styling */
         .navbar-cyber {
-            background: rgba(8, 9, 14, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 20px 0;
+            background: #0B0B0B;
+            border-bottom: 2px solid var(--accent-crimson);
+            padding: 15px 0;
             z-index: 100;
         }
 
         .navbar-brand-cyber {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.6rem;
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
+            color: var(--text-primary) !important;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 12px;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .navbar-brand-cyber img {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
         }
 
         .nav-btn {
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 10px 22px;
-            font-size: 0.9rem;
-            font-weight: 700;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            border-radius: 0;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: var(--text-primary);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            height: 40px;
         }
 
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--neon-cyan);
+            border-color: var(--accent-crimson);
+            background: rgba(163, 0, 0, 0.1);
             color: #fff;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-            transform: translateY(-1px);
+            box-shadow: 0 0 10px var(--accent-crimson-glow);
         }
 
         .nav-btn-primary {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-violet) 100%);
-            border: none;
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+            background: var(--accent-crimson);
+            border-color: var(--accent-crimson);
         }
 
         .nav-btn-primary:hover {
-            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-violet) 100%);
-            border-color: transparent;
-            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.5);
-            filter: brightness(1.1);
+            background: #c30000;
+            border-color: #c30000;
+            box-shadow: 0 0 15px var(--accent-crimson-glow);
         }
 
         /* Hero Section */
         .hero-section {
-            padding: 120px 0 80px 0;
-            text-align: center;
-            z-index: 10;
+            padding: 100px 0 60px 0;
             position: relative;
+            z-index: 10;
         }
 
         .hero-badge {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            color: var(--neon-violet);
-            border-radius: 50px;
-            padding: 6px 20px;
-            font-size: 0.85rem;
+            border-left: 3px solid var(--accent-crimson);
+            background: rgba(163, 0, 0, 0.05);
+            color: var(--text-primary);
+            padding: 6px 16px;
+            font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -137,205 +123,223 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 25px;
-            box-shadow: 0 0 15px rgba(139, 92, 246, 0.15);
         }
 
         .hero-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 4rem;
-            letter-spacing: -1.5px;
+            font-size: 3.5rem;
+            letter-spacing: -1px;
             line-height: 1.1;
-            background: linear-gradient(to right, #fff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
+            text-transform: uppercase;
             margin-bottom: 25px;
         }
 
         .hero-title span {
-            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-violet), var(--neon-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-crimson);
+            text-shadow: 0 0 10px rgba(163, 0, 0, 0.3);
         }
 
         .hero-subtitle {
             color: var(--text-secondary);
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 300;
-            max-width: 700px;
-            margin: 0 auto 40px auto;
+            max-width: 650px;
+            margin-bottom: 40px;
             line-height: 1.6;
         }
 
         /* Stats Blocks */
         .landing-stats {
             display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
         }
 
         .stat-item {
-            text-align: center;
+            text-align: left;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+            padding-left: 20px;
         }
 
         .stat-num {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            color: #fff;
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
         }
 
         .stat-lbl {
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 3px;
         }
 
         /* Feature Section */
         .features-section {
-            padding: 80px 0;
+            padding: 60px 0 100px 0;
             z-index: 10;
             position: relative;
         }
 
         .feat-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            padding: 40px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            padding: 35px;
+            transition: all 0.25s ease;
             height: 100%;
         }
 
         .feat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 240, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4),
-                        0 0 20px rgba(0, 240, 255, 0.05);
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 15px var(--accent-crimson-glow);
+            transform: translateY(-2px);
         }
 
         .feat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: rgba(139, 92, 246, 0.15);
-            color: var(--neon-violet);
+            width: 44px;
+            height: 44px;
+            background: rgba(163, 0, 0, 0.1);
+            color: var(--accent-crimson);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-crimson);
         }
 
         .feat-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            font-size: 1.3rem;
-            color: #fff;
+            font-size: 1.2rem;
+            color: var(--text-primary);
             margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .feat-desc {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.5;
             font-weight: 300;
         }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        /* Media Queries for Android Devices */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0 40px 0;
+                text-align: center;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-badge {
+                margin-bottom: 20px;
+            }
+            .landing-stats {
+                justify-content: center;
+                gap: 20px;
+            }
+            .stat-item {
+                flex: 1 1 40%;
+                border-left: none;
+                border-top: 2px solid rgba(255, 255, 255, 0.08);
+                padding-left: 0;
+                padding-top: 15px;
+                text-align: center;
+            }
+            .d-flex-mobile {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .d-flex-mobile a {
+                width: 100%;
+                justify-content: center;
             }
         }
-
-        .animate-fade-in {
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-        .anim-delay-1 { animation-delay: 0.2s; }
-        .anim-delay-2 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-cyber">
-        <div class="container">
+        <div class="container px-3">
             <a class="navbar-brand-cyber" th:href="@{/}">
                 <img th:src="@{/images/guild_logo.jpg}" alt="Logo">
                 GUILD PORTAL
             </a>
-            <div class="d-flex gap-3">
+            <div class="d-flex gap-2">
                 <a th:href="@{/login}" class="nav-btn">Login</a>
-                <a th:href="@{/register}" class="nav-btn nav-btn-primary">Register</a>
+                <a th:href="@{/register}" class="nav-btn nav-btn-primary d-none d-sm-inline-flex">Register</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-section animate-fade-in">
-        <div class="container">
-            <div class="hero-badge">
-                <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                ENROLL AND ENGAGE IN GUILD HALL
-            </div>
-            
-            <h1 class="hero-title">Manage Guild Salary.<br>Level up your <span>Anime Profile</span>.</h1>
-            <p class="hero-subtitle">The ultimate platform for fantasy guilds. Create your unique avatar, track combat performance, join cooperative raids on the quest boards, and chat with fellow heroes in real time.</p>
-            
-            <div class="d-flex justify-content-center gap-4">
-                <a th:href="@{/register}" class="nav-btn nav-btn-primary px-5 py-3 fs-6">Enroll New Hero</a>
-                <a th:href="@{/login}" class="nav-btn px-5 py-3 fs-6">Access Dashboard</a>
-            </div>
+    <div class="hero-section">
+        <div class="container px-3">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="hero-badge">
+                        ⚔ ENROLL AND ENGAGE IN GUILD HALL
+                    </div>
+                    
+                    <h1 class="hero-title">Manage Guild Salary.<br>Level up your <span>Anime Profile</span>.</h1>
+                    <p class="hero-subtitle">The ultimate platform for fantasy guilds. Create your unique avatar, track combat performance, join cooperative raids on the quest boards, and chat with fellow heroes in real time.</p>
+                    
+                    <div class="d-flex d-flex-mobile gap-3">
+                        <a th:href="@{/register}" class="nav-btn nav-btn-primary px-4 py-2 fs-6 height-auto" style="height: 48px; display: inline-flex; align-items: center;">Enroll New Hero</a>
+                        <a th:href="@{/login}" class="nav-btn px-4 py-2 fs-6 height-auto" style="height: 48px; display: inline-flex; align-items: center;">Access Dashboard</a>
+                    </div>
 
-            <!-- Stats Roster -->
-            <div class="landing-stats animate-fade-in anim-delay-1">
-                <div class="stat-item">
-                    <div class="stat-num" th:text="${totalHeroes} + ' / 100'">15 / 100</div>
-                    <div class="stat-lbl">Active Heroes</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num" th:text="${totalQuests}">3</div>
-                    <div class="stat-lbl">Multiplayer Quests</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-num">SS-CLASS</div>
-                    <div class="stat-lbl">Guild Rarity Tier</div>
+                    <!-- Stats Roster -->
+                    <div class="landing-stats">
+                        <div class="stat-item">
+                            <div class="stat-num" th:text="${totalHeroes} + ' / 100'">15 / 100</div>
+                            <div class="stat-lbl">Active Heroes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num" th:text="${totalQuests}">3</div>
+                            <div class="stat-lbl">Multiplayer Quests</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num">SS-CLASS</div>
+                            <div class="stat-lbl">Rarity Tier</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Feature Grid Section -->
-    <div class="features-section animate-fade-in anim-delay-2">
-        <div class="container">
+    <div class="features-section">
+        <div class="container px-3">
             <div class="row g-4">
                 
                 <!-- Chat feature -->
                 <div class="col-md-4">
                     <div class="feat-card">
                         <div class="feat-icon">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                             </svg>
                         </div>
                         <h3 class="feat-title">Lobby Chat Room</h3>
-                        <p class="feat-desc">Connect and socialize in the real-time global Guild Chat. Coordinate strategy, form alliances, and meet other heroes registered in the database.</p>
+                        <p class="feat-desc">Connect and socialize in the global Guild Chat. Coordinate strategy, form alliances, and meet other heroes registered in the database.</p>
                     </div>
                 </div>
 
@@ -343,7 +347,7 @@
                 <div class="col-md-4">
                     <div class="feat-card">
                         <div class="feat-icon">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
                             </svg>
                         </div>
@@ -356,11 +360,11 @@
                 <div class="col-md-4">
                     <div class="feat-card">
                         <div class="feat-icon">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                             </svg>
                         </div>
-                        <h3 class="feat-title">Profile Rarity Ranking</h3>
+                        <h3 class="feat-title">Rarity Ranking</h3>
                         <p class="feat-desc">Check out your personal dashboard. Depending on your active quest points and combat attributes, automatically advance from B-Rank to SSS-Rank.</p>
                     </div>
                 </div>
