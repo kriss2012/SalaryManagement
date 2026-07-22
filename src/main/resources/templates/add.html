@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form class="row g-3 mt-5" th:action="@{/index1}" th:object="${employees1}" method="POST">
+            <div class="col-md-6">
+              <label for="inputEmail4" class="form-label">Employee ID </label>
+              <input type="text" class="form-control" id="inputEmail4" th:field="*{id}">
+            </div>
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Employee Name</label>
+              <input type="text" class="form-control" id="inputPassword4" th:field="*{name}">
+            </div>
+
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Employee Designation</label>
+              <input type="text" class="form-control" id="inputPassword4" th:field="*{designation}">
+            </div>
+
+            
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Employee Salary</label>
+              <input type="text" class="form-control" id="inputPassword4" th:field="*{Salary}">
+            </div>
+           
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Add </button>
+            </div>
+          </form>
+</body>
+</html>
