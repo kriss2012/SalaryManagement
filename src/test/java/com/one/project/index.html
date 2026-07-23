@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineTick - Premium Movie Booking</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/home.css">
+</head>
+<body>
+
+    <!-- Sticky Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand text-white fw-bold fs-3" href="index.html">
+                <i class="fa-solid fa-film text-gradient me-2"></i>CineTick
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-toggle="target" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Search Bar -->
+                <form class="mx-auto my-3 my-lg-0">
+                    <div class="search-bar-wrapper">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" class="form-control" placeholder="Search for Movies, Events, Plays...">
+                    </div>
+                </form>
+                
+                <!-- Action Buttons -->
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item me-3">
+                        <a class="nav-link btn btn-outline-glass px-4" href="login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-premium px-4" href="register.html">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner Carousel -->
+    <div class="container hero-banner">
+        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=2070&auto=format&fit=crop" class="d-block w-100" alt="Dune">
+                    <div class="carousel-caption d-none d-md-block glass-panel p-4 w-50">
+                        <span class="badge bg-danger mb-2">Premiere</span>
+                        <h2 class="fw-bold">Epic Sci-Fi Adventure</h2>
+                        <p class="text-muted">Experience the cinematic masterpiece in IMAX.</p>
+                        <button class="btn btn-premium mt-2">Book Tickets</button>
+                    </div>
+                </div>
+                <!-- Additional items can be added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <main class="container my-5">
+        <!-- Now Showing -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Recommended <span class="text-gradient">Movies</span></h3>
+            <a href="movies.html" class="text-decoration-none text-muted">See All <i class="fa-solid fa-chevron-right ms-1"></i></a>
+        </div>
+        
+        <div class="row g-4 mb-5">
+            <!-- Movie Card 1 -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="movie-card glass-panel h-100">
+                    <div class="rating-badge">
+                        <i class="fa-solid fa-star"></i> 8.5/10
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1925&auto=format&fit=crop" alt="Movie Poster">
+                    <div class="movie-overlay">
+                        <h5 class="fw-bold text-white mb-1">Inception Re-release</h5>
+                        <p class="text-muted small mb-2">Sci-Fi • Thriller • English</p>
+                        <p class="small text-white-50"><i class="fa-regular fa-clock me-1"></i> 2h 28m</p>
+                        <a href="movie-details.html" class="btn btn-premium w-100 mt-2">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Movie Card 2 -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="movie-card glass-panel h-100">
+                    <div class="rating-badge">
+                        <i class="fa-solid fa-star"></i> 9.0/10
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=2070&auto=format&fit=crop" alt="Movie Poster">
+                    <div class="movie-overlay">
+                        <h5 class="fw-bold text-white mb-1">The Dark Knight</h5>
+                        <p class="text-muted small mb-2">Action • Drama • English</p>
+                        <p class="small text-white-50"><i class="fa-regular fa-clock me-1"></i> 2h 32m</p>
+                        <a href="movie-details.html" class="btn btn-premium w-100 mt-2">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Movie Card 3 & 4 (Placeholders for UI balance) -->
+             <div class="col-6 col-md-4 col-lg-3">
+                <div class="movie-card glass-panel h-100">
+                    <div class="rating-badge"><i class="fa-solid fa-star"></i> 7.8/10</div>
+                    <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?q=80&w=2056&auto=format&fit=crop" alt="Movie Poster">
+                    <div class="movie-overlay">
+                        <h5 class="fw-bold text-white mb-1">Neon City</h5>
+                        <p class="text-muted small mb-2">Cyberpunk • Action • Hindi</p>
+                        <p class="small text-white-50"><i class="fa-regular fa-clock me-1"></i> 1h 55m</p>
+                        <a href="movie-details.html" class="btn btn-premium w-100 mt-2">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="movie-card glass-panel h-100">
+                    <div class="rating-badge"><i class="fa-solid fa-star"></i> 8.1/10</div>
+                    <img src="https://images.unsplash.com/photo-1574267432553-4b4628081524?q=80&w=2070&auto=format&fit=crop" alt="Movie Poster">
+                    <div class="movie-overlay">
+                        <h5 class="fw-bold text-white mb-1">Lost in Space</h5>
+                        <p class="text-muted small mb-2">Adventure • Family • English</p>
+                        <p class="small text-white-50"><i class="fa-regular fa-clock me-1"></i> 2h 10m</p>
+                        <a href="movie-details.html" class="btn btn-premium w-100 mt-2">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5">
+        <div class="container text-center">
+            <h4 class="fw-bold mb-4"><i class="fa-solid fa-film text-gradient me-2"></i>CineTick</h4>
+            <div class="d-flex justify-content-center gap-4 mb-4">
+                <a href="#" class="text-muted fs-4 hover-text-white transition"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-muted fs-4 hover-text-white transition"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" class="text-muted fs-4 hover-text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-muted fs-4 hover-text-white transition"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="text-muted small mb-0">&copy; 2026 CineTick. All Rights Reserved. Designed for premium cinematic experiences.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & Global JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+</html>index.html
