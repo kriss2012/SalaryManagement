@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Home Page Styles (static/css/home.css)
+   ========================================================================== */
+
+/* Navbar */
+.navbar {
+    transition: var(--transition);
+    padding: 15px 0;
+    z-index: 1000;
+}
+.navbar.scrolled {
+    background: rgba(11, 15, 25, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 10px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* Search Bar */
+.search-bar-wrapper {
+    position: relative;
+    width: 300px;
+}
+.search-bar-wrapper input {
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    border-radius: 20px;
+    padding: 8px 15px 8px 40px;
+    width: 100%;
+}
+.search-bar-wrapper input:focus {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+    border-color: #ff4b2b;
+}
+.search-bar-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+/* Hero Carousel */
+.hero-banner {
+    margin-top: 80px; /* Offset for sticky nav */
+    border-radius: 20px;
+    overflow: hidden;
+}
+.carousel-item img {
+    height: 500px;
+    object-fit: cover;
+    border-radius: 20px;
+    filter: brightness(0.7);
+}
+.carousel-caption {
+    bottom: 20%;
+    text-align: left;
+    left: 10%;
+}
+
+/* Movie Cards */
+.movie-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition);
+}
+.movie-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.movie-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.movie-card:hover img {
+    transform: scale(1.05);
+}
+.movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #0b0f19 0%, transparent 100%);
+    opacity: 0.9;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+}
+.rating-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+.rating-badge i {
+    color: #f5c518;
+}
+
+/* Footer */
+footer {
+    background: rgba(0,0,0,0.3);
+    border-top: 1px solid var(--glass-border);
+}
