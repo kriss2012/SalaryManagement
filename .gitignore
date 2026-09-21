@@ -31,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Standards & hygiene
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+*.class
+.gradle/
